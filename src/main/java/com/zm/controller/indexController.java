@@ -26,11 +26,6 @@ public class indexController {
         return String.valueOf(userId) + " " + groupId + " " + key;
     }
 
-    @RequestMapping(path = {"/login"})
-    public String colors(Model model) {
-        return "login";
-    }
-
     @RequestMapping(path = {"/request"}, method = {RequestMethod.GET})
     @ResponseBody
     public String request(Model model,
