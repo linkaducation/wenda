@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zm.dao.questionDao">
+    <sql id="table">
+        Question
+    </sql>
+    <sql id="fields">
+         id,title,content,user_id,comment_count,create_date
+    </sql>
+    <select id="findLatestQuestion" resultType="com.zm.model.Question">
+        SELECT
+        <include refid="fields"/>
+        FROM
+        <include refid="table"/>
+        <if test="userId != 0">
+            where user_id = #{userId}
+        </if>
+        ORDER BY id DESC
+        limit #{offset},#{limit}
+    </select>
+</mapper>
