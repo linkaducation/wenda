@@ -26,8 +26,8 @@ public class userService {
         return user;
     }
 
-    public Map<String, String> regist(String username, String password) {
-        Map<String, String> map = new HashMap<>();
+    public Map<String, Object> regist(String username, String password) {
+        Map<String, Object> map = new HashMap<>();
         if (StringUtils.isBlank(username)) {
             map.put("msg", "账号不能为空");
             return map;
@@ -47,9 +47,9 @@ public class userService {
         user.setPassword(WendaUtil.MD5(password));
         user.setHeadUrl(String.format("http://images.nowcoder.com/head/%dt.png", new Random().nextInt(1000)));
         userDao.addUser(user);
-
+        user = userDao.selectByName(user.getName());
         LoginTicket ticket = addTicket(user);
-        map.put("ticket", ticket.getTicket());
+        map.put("ticket", ticket);
         return map;
     }
 
@@ -73,26 +73,25 @@ public class userService {
             LoginTicket ticket = addTicket(user);
             map.put("ticket", ticket);
         } else {
+            ticket1.setStatus(0);
+            Date now = new Date();
+            now.setTime(now.getTime() + 1000 * 3600 * 24);
+            ticket1.setExpired(now);
+            updateTicket(ticket1);
             map.put("ticket", ticket1);
         }
         return map;
     }
 
-    public int updateUserPassword(User user) {
-        int result = userDao.updatePassword(user);
-        return result;
-    }
-
-    public int deleteUserBuId(int userId) {
-        int result = userDao.deleteById(userId);
-        return result;
+    public void updateTicket(LoginTicket ticket) {
+        ticketLogin.updateTicket(ticket);
     }
 
     public LoginTicket addTicket(User user) {
         LoginTicket ticket = new LoginTicket();
         ticket.setUserId(user.getId());
         Date now = new Date();
-        now.setTime(now.getTime() + 3600 * 24);
+        now.setTime(now.getTime() + 1000 * 3600 * 24);
         ticket.setExpired(now);
         ticket.setStatus(0);
         ticket.setTicket(WendaUtil.MD5(user.getName() + user.getSalt()));
@@ -103,5 +102,11 @@ public class userService {
     public LoginTicket getTicket(String ticket) {
         LoginTicket reticket = ticketLogin.getTicket(ticket);
         return reticket;
+    }
+
+    public void logout(String t) {
+        LoginTicket ticket = getTicket(t);
+        ticket.setStatus(1);
+        ticketLogin.updateTicket(ticket);
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,19 @@ public class homeController {
         List<ViewObject> vos = getList(0, 0, 10);
         model.addAttribute("vos", vos);
         return "index";
+    }
+
+    @RequestMapping(path = {"/user/{userId}"})
+    public String user(Model model,
+                       @RequestParam(value = "userId", required = false) Integer userId) {
+        List<ViewObject> vos = new ArrayList<>();
+        if (userId == null) {
+            vos = getList(0, 0, 10);
+        } else {
+            vos = getList(userId, 0, 10);
+        }
+        model.addAttribute("vos", vos);
+        return "/";
     }
 
     private List<ViewObject> getList(int userId, int offset, int limit) {

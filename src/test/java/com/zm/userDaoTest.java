@@ -43,9 +43,8 @@ public class userDaoTest {
 
     @Test
     public void selectById() {
-        User user = dao.selectById(1);
-        User user1 = dao.selectById(2);
-        logger.info("两个用户分别是：" + user + " " + user1);
+        User user = dao.selectById(30);
+        logger.info("两个用户分别是：" + user);
     }
 
     @Test
