@@ -1,5 +1,6 @@
 package com.zm.controller;
 
+import com.zm.model.LoginTicket;
 import com.zm.service.userService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -21,8 +24,8 @@ public class loginController {
     userService userService;
     Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @RequestMapping(path = {"/login"})
-    public String login() {
+    @RequestMapping(path = {"/loginreg"})
+    public String loginreg() {
         return "login";
     }
 
@@ -41,6 +44,28 @@ public class loginController {
             logger.error(e.getMessage());
             return "/login";
         }
+    }
+
+    @RequestMapping(path = {"/login"}, method = RequestMethod.POST)
+    public String login(Model model,
+                        @RequestParam("username") String username,
+                        @RequestParam("password") String password,
+                        HttpServletResponse response) {
+        try {
+            Map<String, Object> map = userService.login(username, password);
+            if (map.containsKey("msg")) {
+                model.addAttribute("msg", map.get("msg"));
+                return "/login";
+            } else if (map.containsKey("ticket")) {
+                Cookie cookie = new Cookie("ticket", ((LoginTicket) map.get("ticket")).getTicket());
+                response.addCookie(cookie);
+                return "redirect:/";
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage());
+            return "/login";
+        }
+        return null;
     }
 
 }

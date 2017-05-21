@@ -1,6 +1,8 @@
 package com.zm;
 
+import com.zm.dao.ticketLoginDAO;
 import com.zm.dao.userDao;
+import com.zm.model.LoginTicket;
 import com.zm.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,7 +24,8 @@ import static org.junit.Assert.*;
 public class userDaoTest {
     @Autowired
     private userDao dao;
-
+    @Autowired
+    private ticketLoginDAO ticketLoginDAO;
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Test
@@ -52,8 +55,9 @@ public class userDaoTest {
     }
 
     @Test
-    public void deleteById() {
-        dao.deleteById(1);
+    public void ticket() {
+        LoginTicket ticket = ticketLoginDAO.getTicket("zmc3a37");
+        System.out.println(ticket);
     }
 
 }
