@@ -30,7 +30,7 @@ public class loginController {
     @RequestMapping(path = {"/loginreg"})
     public String loginreg(@RequestParam(value = "next",required = false) String next,
                            Model model) {
-        if (next != null) {
+        if (next != "") {
             model.addAttribute("next",next);
         }
         return "login";
@@ -57,7 +57,7 @@ public class loginController {
                     User user = userService.selectUserBuId(ticket.getUserId());
                     hostHolder.setUser(user);
                 }
-                if (next != null) {
+                if (next != "") {
                     return "redirect:" + next;
                 }
                 return "redirect:/";
@@ -86,7 +86,7 @@ public class loginController {
                 cookie.setMaxAge(3600 * 24 * 1000);
                 cookie.setPath("/");
                 response.addCookie(cookie);
-                if (next != null) {
+                if (next != "") {
                     return "redirect:" + next;
                 }
                 return "redirect:/";
