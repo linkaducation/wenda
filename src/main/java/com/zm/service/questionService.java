@@ -43,4 +43,8 @@ public class questionService {
     public Question findQuestionById(int id) {
         return questionDao.findQuestionById(id);
     }
+
+    public void updateQuestion(Question question) {
+        questionDao.updateQuestion(question);
+    }
 }
