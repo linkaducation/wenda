@@ -109,4 +109,8 @@ public class userService {
         ticket.setStatus(1);
         ticketLogin.updateTicket(ticket);
     }
+
+    public User selectUserByName(String userName) {
+        return userDao.selectByName(userName);
+    }
 }

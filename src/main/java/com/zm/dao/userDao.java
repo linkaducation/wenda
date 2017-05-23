@@ -26,4 +26,5 @@ public interface userDao {
 
     @Delete({"delete from ", TABLE_NAME, "where id=#{id}"})
     int deleteById(int id);
+
 }
