@@ -36,6 +36,9 @@ public class PassportInterceptor implements HandlerInterceptor {
         if (request.getRequestURI().contains("reg")) {
             return true;
         }
+        if (cookies == null) {
+            return true;
+        }
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals("ticket")) {
                 t = cookie.getValue();
