@@ -64,7 +64,10 @@ public class QuestionController {
 	public String findQuestionById(Model model, @PathVariable("id") int id) {
 
 		Question question = questionService.findQuestionById(id);
-		User user = userService.selectUserBuId(question.getUserId());
+		User user = null;
+		if (hostHolder.getUser() != null) {
+			user = hostHolder.getUser();
+		}
 
 		List<Comment> list = commentService.getComments(id, EntityType.ENTITY_COMMENT);
 		List<ViewObject> vos = new ArrayList<ViewObject>();
