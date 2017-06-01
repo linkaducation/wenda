@@ -1,0 +1,6 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="wenda">
+    <output-path>$PROJECT_DIR$/out/artifacts/wenda</output-path>
+    <root id="archive" name="wenda.war" />
+  </artifact>
+</component>

@@ -4,7 +4,6 @@ import com.zm.dao.MessageDAO;
 import com.zm.model.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.plugin2.message.Conversation;
 
 import java.util.List;
 

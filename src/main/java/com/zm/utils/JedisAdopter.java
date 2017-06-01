@@ -20,7 +20,7 @@ public class JedisAdopter implements InitializingBean{
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        pool = new JedisPool("redis://127.0.0.1:6379/2");
+        pool = new JedisPool("redis://127.0.0.1:6379");
     }
 
     /**
